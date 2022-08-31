@@ -1,11 +1,19 @@
 {
-    "compilerOptions": {
-      "module": "ES2022",
+  "compilerOptions": {
+      "module": "node16",
+      "preserveConstEnums": true,
+      "declaration": true,
       "esModuleInterop": true,
       "target": "ES2022",
-      "moduleResolution": "node",
+      "moduleResolution": "node16",
       "sourceMap": true,
+      "strict": true,
+      "types": ["node"],
       "outDir": "dist"
-    },
-    "lib": ["ES2022"]
-  }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"],
+  "lib": [
+      "es2022"
+  ]
+}

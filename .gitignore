@@ -13,3 +13,10 @@ Thumbs.db
 
 # Ignore built ts files
 dist/**/*
+
+temp/**/*
+
+.clinic
+
+# Logs
+output.log

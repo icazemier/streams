@@ -1,25 +1,33 @@
-// Streams API some possibilities
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { runServer } from './examples/video/index.js';
+import {
+    AsyncObjectDataToFile,
+    AsyncObjectDataToCSV,
+    BasicObjectDataToFile,
+    SyncObjectDataToCSV,
+    SyncObjectDataToCSVToZip,
+    BackToBasic,
+} from './examples/index.js';
+import { BaseExample } from './examples/base-example.js';
+import { Files, timeout } from './helpers/index.js';
 
-/**
- *   @example
- *   ```
- *   # Planning
- * 
- *   ## Stream:
- *   1. Data => output
- *   1. Data => Transform data => local file CSV
- *   1. From MongoDB => Transform data => CSV local file
- *   1. From MongoDB => Transform data => CSV => local compressed (zip) file
- *   1. From MongoDB => Transform data => CSV => compress (zip) => S3
- *   1. From SQL => Transform data => CSV => compress (zip) => S3
- * 
- *   ## How to: Unit test a stream
- * 
- * 
- *   
- *
- *   ```
- */
+const jobs: typeof BaseExample[] = [
+    BasicObjectDataToFile,
+    AsyncObjectDataToFile,
+    AsyncObjectDataToCSV,
+    SyncObjectDataToCSV,
+    SyncObjectDataToCSVToZip,
+    BackToBasic,
+];
 
+const go = async () => {
+    Files.createTempDirIfNotExist();
 
-console.log('Dope!');
+    for (let Job; (Job = jobs.shift()); ) {
+        const job = new Job();
+        await job.run();
+        await timeout(500);
+    }
+};
+
+go();
