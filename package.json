@@ -1,0 +1,19 @@
+{
+  "name": "@icazemier/streams",
+  "author": "I.Cazemier <git@warmemelk.nl>",
+  "version": "1.0.0",
+  "description": "Experiment with the Node.js Streams API",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "lint": "eslint . --ext .ts"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "eslint": "^8.23.0",
+    "typescript": "^4.8.2"
+  },
+  "license": "UNLICENSED"
+}
