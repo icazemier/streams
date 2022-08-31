@@ -1,11 +1,18 @@
 {
-    "compilerOptions": {
-      "module": "ES2022",
+  "compilerOptions": {
+      "module": "CommonJS",
+      "preserveConstEnums": true,
       "esModuleInterop": true,
       "target": "ES2022",
       "moduleResolution": "node",
       "sourceMap": true,
+      "strict": true,
+      "types": ["node"],
       "outDir": "dist"
-    },
-    "lib": ["ES2022"]
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
+  "lib": [
+      "es2022"
+  ]
+}

@@ -1,25 +1,30 @@
-// Streams API some possibilities
+import {
+    AsyncObjectDataToFile,
+    AsyncObjectDataToCSV,
+    BasicObjectDataToFile,
+    SyncObjectDataToCSV,
+    SyncObjectDataToCSVToZip,
+} from './examples';
+import { BaseExample } from './examples/base-example';
+import { Files, timeout } from './helpers';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { runServer } from './examples/video';
 
-/**
- *   @example
- *   ```
- *   # Planning
- * 
- *   ## Stream:
- *   1. Data => output
- *   1. Data => Transform data => local file CSV
- *   1. From MongoDB => Transform data => CSV local file
- *   1. From MongoDB => Transform data => CSV => local compressed (zip) file
- *   1. From MongoDB => Transform data => CSV => compress (zip) => S3
- *   1. From SQL => Transform data => CSV => compress (zip) => S3
- * 
- *   ## How to: Unit test a stream
- * 
- * 
- *   
- *
- *   ```
- */
+//  new DataToSTDIO(),
+const jobs: BaseExample[] = [
+    new BasicObjectDataToFile(),
+    new AsyncObjectDataToFile(),
+    new AsyncObjectDataToCSV(),
+    new SyncObjectDataToCSV(),
+    new SyncObjectDataToCSVToZip(),
+];
 
+const go = async () => {
+    Files.createTempDirIfNotExist();
+    for (const job of jobs) {
+        await job.run();
+        await timeout(500);
+    }
+};
 
-console.log('Dope!');
+go();

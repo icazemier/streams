@@ -5,15 +5,28 @@
   "description": "Experiment with the Node.js Streams API",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run clean && tsc -p .",
+    "clean": "rm -rf ./dist",
     "start": "npm run build && node dist/index.js",
-    "lint": "eslint . --ext .ts"
+    "start:stream-big-file-front-end": "npm run build && node dist/examples/video/stream-big-file-front-end/index.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "devDependencies": {
+    "@types/express": "^4.17.13",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.0",
     "typescript": "^4.8.2"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "csv-stringify": "^6.2.0",
+    "express": "^4.18.1",
+    "jszip": "^3.10.1"
+  }
 }
