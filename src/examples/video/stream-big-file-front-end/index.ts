@@ -1,20 +1,8 @@
 import { createReadStream, statSync } from 'fs';
 import { join } from 'path';
+import { pipeline } from 'stream/promises';
 import express from 'express';
-
-// const runServer = async () => {
-
-//   const server = createServer();
-//   server.on("request", (req, res) => {
-//     const path = join(process.cwd(),'assets','bigfile.MOV');
-//     const src = createReadStream(path);
-//     src.pipe(res);
-//   });
-
-//   server.listen(8000);
-//   console.info('Listening on: http://localhost:8000')
-//   return server;
-// }
+import axios from 'axios';
 
 const runServer = async () => {
     const app = express();
@@ -24,33 +12,28 @@ const runServer = async () => {
         res.sendFile(path);
     });
 
-    app.get('/video', (req, res) => {
-        const range = req.headers.range;
-        if (!range) {
-            res.status(400).send('Requires Range header');
-            return;
+    app.get('/video', async (req, res) => {
+        const response = await axios.get(
+            'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_2160p_60fps_normal.mp4',
+            {
+                responseType: 'stream',
+            }
+        );
+        const { data: bunnyStream } = response;
+        try{
+            await pipeline(bunnyStream, res);
+        } catch (error) {
+            console.error(error);
         }
-        const videoPath = join(process.cwd(), 'assets', 'big-file.mp4');
-        const videoSize = statSync(videoPath).size;
-        const CHUNK_SIZE = 10 ** 6; // 1MB
-        const start = Number(range.replace(/\D/g, ''));
-        const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
-        const contentLength = end - start + 1;
-        const headers = {
-            'Content-Range': `bytes ${start}-${end}/${videoSize}`,
-            'Accept-Ranges': 'bytes',
-            'Content-Length': contentLength,
-            'Content-Type': 'video/mp4',
-        };
-        // HTTP Status 206 for Partial Content
-        res.writeHead(206, headers);
-        const videoStream = createReadStream(videoPath, { start, end });
-        videoStream.pipe(res);
+        
+        console.log('DONE!');
     });
 
     app.listen(8000, () => {
         console.log('Listening on port http://localhost:8000 !');
     });
+
+    return app;
 };
 
 runServer();
