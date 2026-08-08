@@ -1,9 +1,8 @@
 import { createLogger, format, transports, LoggerOptions } from 'winston';
-import { ConsoleTransportOptions } from 'winston/lib/winston/transports';
 const { combine, splat, timestamp, printf } = format;
 
 const myFormat = printf(({ level, message, timestamp }) => {
-    let msg = `${timestamp} [${level}] : ${message} `;
+    const msg = `${timestamp} [${level}] : ${message} `;
     return msg;
 });
 

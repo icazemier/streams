@@ -11,7 +11,7 @@ import {
 import { BaseExample } from './examples/base-example.js';
 import { Files, timeout } from './helpers/index.js';
 
-const jobs: typeof BaseExample[] = [
+const jobs: (typeof BaseExample)[] = [
     BasicObjectDataToFile,
     AsyncObjectDataToFile,
     AsyncObjectDataToCSV,
@@ -23,7 +23,7 @@ const jobs: typeof BaseExample[] = [
 const go = async () => {
     Files.createTempDirIfNotExist();
 
-    for (let Job; (Job = jobs.shift()); ) {
+    for (let Job; (Job = jobs.shift());) {
         const job = new Job();
         await job.run();
         await timeout(500);
